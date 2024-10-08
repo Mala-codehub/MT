@@ -4,33 +4,19 @@ import MovieList from './components/MovieList';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);
 
-  // Fetch movies based on search query
+  // Updated function with API key and search parameter
   const fetchMovies = async (query) => {
-    const apiKey = '91f524ba';
+    const apiKey = '91f524ba'; // Your OMDb API key
     const response = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=${apiKey}`);
     const data = await response.json();
-    
+    console.log(data); // Log the response to check for errors
+
     if (data.Response === "True") {
       setMovies(data.Search);
     } else {
-      console.error(`Error: ${data.Error}`);
+      console.error(`Error: ${data.Error}`); // Log the error message for debugging
       setMovies([]);
-    }
-  };
-
-  // Fetch recommended movies based on a genre
-  const fetchRecommendations = async (genre) => {
-    const apiKey = '91f524ba';
-    const response = await fetch(`http://www.omdbapi.com/?s=${genre}&apikey=${apiKey}`);
-    const data = await response.json();
-
-    if (data.Response === "True") {
-      setRecommendations(data.Search);
-    } else {
-      console.error(`Error: ${data.Error}`);
-      setRecommendations([]);
     }
   };
 
@@ -38,13 +24,7 @@ const App = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-center text-3xl font-bold">Movie Search & Recommendation</h1>
       <Search onSearch={fetchMovies} />
-      <MovieList movies={movies} onRecommend={fetchRecommendations} />
-      {recommendations.length > 0 && (
-        <div>
-          <h2 className="text-2xl font-bold mt-8 text-center">Recommended Movies</h2>
-          <MovieList movies={recommendations} />
-        </div>
-      )}
+      <MovieList movies={movies} />
     </div>
   );
 };
