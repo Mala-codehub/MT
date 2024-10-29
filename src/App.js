@@ -8,7 +8,7 @@ const App = () => {
   // Updated function with API key and search parameter
   const fetchMovies = async (query) => {
     const apiKey = '91f524ba'; // Your OMDb API key
-    const response = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=${apiKey}`);
+    const response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${apiKey}`);
     const data = await response.json();
     console.log(data); // Log the response to check for errors
 
